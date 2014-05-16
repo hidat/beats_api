@@ -36,16 +36,17 @@ class BeatsPlayer
     #@bam.on("volumechange", @eventHandler.onVolumeChange);
     @bam.on("error", @eventHandler.onError);
 
-  playTrack: (trackID) ->
-    @bam.identifier = trackId;
+  loadTrack: (trackID) ->
+    @bam.identifier = trackID;
     @bam.load();
 
+  togglePlayback: () ->
+    @bam.play()
 
 
-
-class BeatsUI
+class PlayerEventHandler
   constructor: (options) ->
-    baseEl = $(options.baseSelector || 'beats-player')
+    @baseEl = $(options.baseSelector || 'beats-player')
 
   onReady: (bam) =>
     console.log('BAM Ready')
@@ -55,29 +56,53 @@ class BeatsUI
     switch value
       when "auth"
         # Beats Music API auth error (401)
+        console.log('Auth Error!')
 
       when "connectionfailure"
         # audio stream connection failure
+        console.log(' Error!')
 
       when "apisecurity"
         # Beats Music API crossdomain error
+        console.log(' Error!')
 
       when "streamsecurity"
         # audio stream crossdomain error
+        console.log(' Error!')
 
       when "streamio"
         # audio stream io error
+        console.log(' Error!')
 
       when "apiio"
         # Beats Music API io error getting track data
+        console.log(' Error!')
 
       when "flashversion"
         # flash version too low or not installed (10.2)
+        console.log(' Error!')
 
       else
         console.log("Don't know that error!")
 
+class PlayerController
+  constructor: (@player, options) ->
+    @baseEl = $(options.baseSelector || 'beats-player')
+    @hookupEvents()
+
+  hookupEvents: () ->
+    $('#loadStream').click( () =>
+      trackID = $('#trackId').val()
+      console.log('Loading Track ' + trackID)
+      @player.loadTrack(trackID)
+    )
+
+    $('#play').click(() =>
+      console.log('Toggling Track')
+      @player.togglePlayback()
+    )
 
 
-Window.BeatsPlayer = BeatsPlayer
-Window.BeatsUI = BeatsUI
+window.BeatsPlayer = BeatsPlayer
+window.PlayerEventHandler = PlayerEventHandler
+window.PlayerController = PlayerController
