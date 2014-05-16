@@ -1,0 +1,7 @@
+<h1>Beats API Test App</h1>
+<%= form_tag({controller: 'play', action: 'index'}, method: :get) do %>
+    <label>Track ID:</label><%= text_field_tag :track_id %>
+    <label>Access Token:</label><%= text_field_tag :access_token %>
+    <%= submit_tag('Play!') %>
+<% end %>
+

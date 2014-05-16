@@ -1,0 +1,55 @@
+<% content_for :page_scripts do %>
+<script src="http://bam.cdn.beatsmusic.com/bam-1.0.1.min.js"></script>
+<script type="text/javascript">
+  bap = new BeatsUI();
+  var options = {
+    startTrack: "<%= @track_id %>",
+    clientID: "<%= @client_id %>",
+    acccessToken: "<%= @access_token %>"
+  }
+  bam = BeatsPlayer.new(bap, options)
+</script>
+
+<% end %>
+
+<h1>Play Tracks</h1>
+<p>Client ID: <%= @client_id%></p>
+<p>Access Token: <%= @access_token%></p>
+<p>Track: <%= @track_id%></p>
+
+<form action="">
+  <br>trackId
+  <input type="text" id="trackId" size="50">
+  <br>autoplay
+  <input id="autoplay" type="checkbox" checked>
+  <br>loop
+  <input id="loopStream" type="checkbox">
+  <br>
+  <input id="loadStream" type="button" value="Load">
+  <input id="playStream" type="button" value="Play">
+  <input id="pauseStream" type="button" value="Pause">
+  <input id="stopStream" type="button" value="Stop">
+  <br>seek to
+  <input type="text" id="seek" size="20">
+  <input id="doSeek" type="button" value="Set">
+  <br>volume
+  <input type="text" id="volume" size="7">
+  <input id="doVolume" type="button" value="Set">
+  <input id="volumeDown" type="button" value="-">
+  <input id="volumeUp" type="button" value="+">
+  <input id="muted" type="button" value="unmute">
+  <input id="unmuted" type="button" value="mute">
+  <br>
+  <div id="trackName"></div>
+  <div id="timeDuration"></div>
+  <div id="timeElapsed"></div>
+  <div id="timeRemaining"></div>
+  <div>Buffered</div>
+  <div id="timeBufferedStart"></div>
+  <div id="timeBufferedEnd"></div>
+  <div id="timeBufferedLength"></div>
+  <div>Seekable</div>
+  <div id="timeSeekableStart"></div>
+  <div id="timeSeekableEnd"></div>
+  <div id="timeSeekableLength"></div>
+</form>

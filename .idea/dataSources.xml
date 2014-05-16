@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="2674546474">
+    <data-source source="LOCAL" name="Rails beats_api: development" uuid="f59088b5-3185-4ab6-a60d-8125cfa196cd">
+      <driver-ref>postgresql</driver-ref>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://127.0.0.1/beats_development</jdbc-url>
+      <user-name>postgres</user-name>
+      <user-password>df9edffadfc5dfd9dfdedfcddfd8dfcfdfd9df8b</user-password>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="Rails beats_api: test" uuid="51552dde-761f-470c-9ca5-1b6cbd814b11">
+      <driver-ref>postgresql</driver-ref>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://127.0.0.1/beats_test</jdbc-url>
+      <user-name>postgres</user-name>
+      <user-password>df9edffadfc5dfd9dfdedfcddfd8dfcfdfd9df8b</user-password>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="Rails beats_api: production" uuid="90130043-8740-43bd-8d7c-79cabdc0c0d1">
+      <driver-ref>postgresql</driver-ref>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql:beats_production</jdbc-url>
+      <user-name>beats_api</user-name>
+      <user-password>df96df8fdf97df8adfefdfe4dffcdff1df8ddfe8dfefdfebdffedff9dff5dfebdffadfe3dff5dfeedfebdffedfebdfe8dfebdff9dfefdff5dffadfebdff9dff9dffddfe5dff8dfeedf8ddff7df8adf8fdf94</user-password>
+      <libraries />
+    </data-source>
+  </component>
+</project>
+
