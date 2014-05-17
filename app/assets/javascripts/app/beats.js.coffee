@@ -16,12 +16,13 @@ class BeatsPlayer
         bam_engine.style.height = "300px";
 
       # set credentials
-      bam.clientId = @clientID;
-      bam.authentication =
+      @bam.clientId = @clientID;
+      @bam.authentication =
         access_token: @accessToken,
         user_id: @userID
 
       @eventHandler.onReady(@bam)
+      true
     )
 
     #@bam.on("durationchange", @eventHandler.onDuration);

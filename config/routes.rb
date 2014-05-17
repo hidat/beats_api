@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   get 'home/:action' => 'home#:action'
   get 'play/:action' => 'play#:action'
+  get 'auth/:action' => 'auth#:action'
 
   root 'home#index'
 

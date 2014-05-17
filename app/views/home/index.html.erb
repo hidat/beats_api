@@ -1,7 +1,9 @@
+
 <h1>Beats API Test App</h1>
-<%= form_tag({controller: 'play', action: 'index'}, method: :get) do %>
-    <label>User ID:</label><%= text_field_tag :user_id %>
-    <label>Access Token:</label><%= text_field_tag :access_token %>
-    <%= submit_tag('Play!') %>
+<p>We need to connect to your Beats Music account to show you the money!</p>
+<p>If you have an access token, please enter it below.  If not, click <a href="<%= beats_auth_url() %>">here</a> to try and connect through Beats oAuth API.</p>
+<%= form_tag({action: 'index', controller: 'play'}, method: 'get') do %>
+    <label>Access Token: </label><%= text_field_tag(:access_token) %>
+    <%= submit_tag('Go!') %>
 <% end %>
 
