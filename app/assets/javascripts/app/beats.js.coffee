@@ -9,6 +9,7 @@ class BeatsPlayer
     @bamReady = false
     @showConsole = options.showConsole
     @bam = new BeatsAudioManager()
+
     @bam.on("ready", ()=>
       @bamReady = true
       if @showConsole
@@ -27,36 +28,47 @@ class BeatsPlayer
 
     @bam.on("durationchange", (duration)=>
       @eventHandler.onDuration(@bam, duration)
+      true
     );
     @bam.on("loadedmetadata", (metadata)=>
       @eventHandler.onMetadataLoaded(@bam, metadata)
+      true
     );
     @bam.on("canplay", ()=>
       @eventHandler.onStreamStarted(@bam)
+      true
     );
     @bam.on("playing", ()=>
       @eventHandler.onStreamPlaying(@bam)
+      true
     );
     @bam.on("pause", ()=>
       @eventHandler.onStreamPaused(@bam)
+      true
     );
     @bam.on("stopped", ()=>
       @eventHandler.onStreamStopped(@bam)
+      true
     );
     @bam.on("stalled", ()=>
       @eventHandler.onStreamStalled(@bam)
+      true
     );
     @bam.on("ended", ()=>
       @eventHandler.onStreamEnded(@bam)
+      true
     );
     @bam.on("timeupdate", ()=>
       @eventHandler.onTimeUpdate(@bam)
+      true
     );
     @bam.on("volumechange", ()=>
       @eventHandler.onVolumeChange(@bam)
+      true
     );
     @bam.on("error", (error)=>
       @eventHandler.onError(@bam, error)
+      true
     );
 
   loadTrack: (trackID) ->
@@ -107,46 +119,47 @@ class PlayerEventHandler
 
       else
         console.log("Don't know that error!")
+    true
 
-    onDuration: (duration) =>
-      console.log('onDuration')
-      true
+  onDuration: (duration) =>
+    console.log('onDuration')
+    true
 
-    onMetadataLoaded: (metadata) =>
-      console.log('onMetadataLoaded')
-      true
+  onMetadataLoaded: (metadata) =>
+    console.log('onMetadataLoaded')
+    true
 
-    onStreamStarted: () =>
-      console.log('onStreamStarted')
-      true
+  onStreamStarted: () =>
+    console.log('onStreamStarted')
+    true
 
-    onStreamPlaying: () =>
-      console.log('onStreamPlaying')
-      true
+  onStreamPlaying: () =>
+    console.log('onStreamPlaying')
+    true
 
-    onStreamPaused: () =>
-      console.log('onStreamPaused')
-      true
+  onStreamPaused: () =>
+    console.log('onStreamPaused')
+    true
 
-    onStreamStopped: () =>
-      console.log('onStreamStopped')
-      true
+  onStreamStopped: () =>
+    console.log('onStreamStopped')
+    true
 
-    onStreamStalled: () =>
-      console.log('onStreamStalled')
-      true
+  onStreamStalled: () =>
+    console.log('onStreamStalled')
+    true
 
-    onStreamEnded: () =>
-      console.log('onStreamEnded')
-      true
+  onStreamEnded: () =>
+    console.log('onStreamEnded')
+    true
 
-    onTimeUpdate: () =>
-      console.log('onTimeUpdate')
-      true
+  onTimeUpdate: () =>
+    console.log('onTimeUpdate')
+    true
 
-    onVolumeChange: (onVolumeChange) =>
-      console.log('')
-      true
+  onVolumeChange: (onVolumeChange) =>
+    console.log('')
+    true
 
 
 class PlayerController
