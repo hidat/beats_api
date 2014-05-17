@@ -4,7 +4,7 @@ module ApplicationHelper
     qp = {
         state: 'test',
         response_type: 'token',
-        redirect_url: 'http://127.0.0.1:3000/auth/beats_callback',
+        redirect_url: APP_CONFIG[:auth_callback_url],
         client_id: Rails.application.secrets.beats_client_id
     }
     "https://partner.api.beatsmusic.com/v1/oauth2/authorize?" + qp.to_query()

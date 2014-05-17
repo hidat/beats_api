@@ -1,0 +1,20 @@
+production:
+  auth_callback_url: http://eclectivemixer.com/auth/beats_callback
+
+development:
+  auth_callback_url: http://127.0.0.1/auth/beats_callback
+
+
+test:
+  multi_tenant: false
+  default_registry_account_id: first
+  public_subscription_level: 2
+  public_subscription_id: first
+
+  registry_code: test
+  registry_name: Test Default User
+  registry_url: http://www.clydesusa.com
+  allow_login: true
+  require_tos: true
+  default_country: USA
+  use_ga: false

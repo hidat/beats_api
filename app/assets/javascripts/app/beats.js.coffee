@@ -168,7 +168,7 @@ class PlayerController
     @hookupEvents()
 
   hookupEvents: () ->
-    $('#loadStream').click( () =>
+    $('.media-control.play').click( () =>
       trackID = $('#trackId').val()
       console.log('Loading Track ' + trackID)
       @player.loadTrack(trackID)
