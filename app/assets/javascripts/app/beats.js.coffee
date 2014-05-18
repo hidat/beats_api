@@ -93,12 +93,15 @@ class BeatsAPI
     else
       @bam.pause()
 
-  apiCall: (pMethod, pParms) ->
+  apiCall: (pMethod, pParms) =>
     if pParms?
       pParms.client_id = @clientID
+      pParms.access_token = @accessToken
     else
       pParms =
         client_id: @clientID
+        access_token: @accessToken
+
     theURL = @apiURL + pMethod
 
     ajaxObj =

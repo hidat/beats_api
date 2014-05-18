@@ -1,8 +1,10 @@
 PlayController = (() ->
-  session = null
-  uiManager = null
-  playlistManager = null
   beatsAPI = null
+  userID = null
+  tracksToPlay = []
+  currentTrack = 0
+  playingAll = false
+  fastPlayMode = false
 
   eventHandlers =
     onReady: (bam) =>
@@ -91,6 +93,7 @@ PlayController = (() ->
     onStreamEnded: (bam) =>
       console.log('onStreamEnded')
       $('#beats-player').removeClass('now-playing')
+      playerController.gotoNext()
       true
 
     onTimeUpdate: (bam) =>
@@ -106,7 +109,6 @@ PlayController = (() ->
 
 
   playerController =
-
     hookupEvents: () ->
       $('.play-container a').click( () =>
         trackID = $('#trackId').val()
@@ -154,6 +156,13 @@ PlayController = (() ->
         @playSegment(1, segments, seconds)
         true
       )
+      $('#play-all').click( ()=>
+        playerController.playAll()
+      )
+      $('#play-all-fast').click( ()=>
+        playerController.playAllFast()
+      )
+
 
     playSegment: (segment, total, length) ->
       totalDuration = beatsAPI.bam.duration
@@ -174,6 +183,42 @@ PlayController = (() ->
         , timerLength * 1000)
       true
 
+    loadShit: () ->
+      #c = beatsAPI.apiCall('users/' + userID + '/recs/just_for_you')
+      c = beatsAPI.apiCall('users/' + userID + '/mymusic/tracks')
+      c.done((res) =>
+        if (res.code = 'OK')
+          for track in res.data
+            tracksToPlay.push(track.id)
+        true
+      )
+      alert(tracksToPlay.length + ' tracks loaded!')
+      true
+
+    playAll: () ->
+      currentTrack = 0
+      playingAll = true
+      playerController.gotoNext()
+      true
+
+    playAllFast: () ->
+      currentTrack = 0
+      fastPlayMode = true
+      playingAll = true
+      playerController.gotoNext()
+      true
+
+
+    gotoNext: () ->
+      if (playingAll)
+        if (currentTrack < tracksToPlay.length)
+          beatsAPI.loadTrack((tracksToPlay[currentTrack]))
+          if (fastPlayMode)
+            segments = $('#segments').val()
+            seconds = $('#length').val()
+            @playSegment(1, segments, seconds)
+
+          currentTrack++
 
 
   publicAPI =
@@ -181,7 +226,6 @@ PlayController = (() ->
   # Initializes the NGN1 SDK
   ##
     initialize: (pOptions) ->
-      session = null
 
       # Validate configuration
       unless pOptions?
@@ -189,11 +233,13 @@ PlayController = (() ->
         return false
 
       beatsAPI = new BeatsAPI(eventHandlers, pOptions)
+      userID = pOptions.userID
       playerController.hookupEvents()
       true
 
     setAuthToken: (token) ->
       beatsAPI.setAuthToken((token))
+      playerController.loadShit()
       true
 
 
