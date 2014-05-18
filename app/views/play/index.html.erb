@@ -1,16 +1,13 @@
 <% content_for :page_scripts do %>
     <script src="http://bam.cdn.beatsmusic.com/bam-1.0.1.min.js"></script>
     <script type="text/javascript">
-        var uiOptions = {};
-        bap = new PlayerEventHandler(uiOptions);
         var options = {
             clientID: "<%= @client_id %>",
             userID: "<%= @user_id %>",
             accessToken: "<%= @access_token %>",
             showConsole: true
         }
-        bam = new BeatsPlayer(bap, options);
-        player = new PlayerController(bam, uiOptions);
+        PlayManager.initialize(options);
 
         function popAuth() {
             authWindow = window.open("https://partner.api.beatsmusic.com/oauth2/authorize?" +
@@ -24,8 +21,9 @@
         }
 
         function setOAuth2AccessToken(token) {
-            bam.setAuthToken(token);
+            PlayManager.setAuthToken(token);
             $('.access-token').text(token);
+
         }
 
         $(document).ready(function() {
@@ -38,7 +36,7 @@
 <h1>Play Tracks</h1>
 <p>Client ID: <%= @client_id %></p>
 <p>User ID: <%= @user_id %></p>
-<p>Access Token: <span class="access-token"><%= @access_token %></span></p>
+<p>Access Token: <span class="access-token"><%= @access_token %></span> <button id="auth">Authorize</button></p>
 
 <form action="">
   <div>
@@ -49,7 +47,7 @@
     <label>Segments:</label><input type="text" id="segments" size="8" value="4">
     <label>Seconds:</label><input type="text" id="length" size="8" value="6">
   </div>
-  <button id="auth">Auth Test</button>
+
 </form>
 
 <div id="beats-player">
