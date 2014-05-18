@@ -1,30 +1,44 @@
 <% content_for :page_scripts do %>
-<script src="http://bam.cdn.beatsmusic.com/bam-1.0.1.min.js"></script>
-<script type="text/javascript">
-  var uiOptions = {};
-  bap = new PlayerEventHandler(uiOptions);
-  var options = {
-    clientID: "<%= @client_id %>",
-    userID: "<%= @user_id %>",
-    accessToken: "<%= @access_token %>",
-    showConsole: true
-  }
-  bam = new BeatsPlayer(bap, options);
-  player = new PlayerController(bam, uiOptions);
+    <script src="http://bam.cdn.beatsmusic.com/bam-1.0.1.min.js"></script>
+    <script type="text/javascript">
+        var uiOptions = {};
+        bap = new PlayerEventHandler(uiOptions);
+        var options = {
+            clientID: "<%= @client_id %>",
+            userID: "<%= @user_id %>",
+            accessToken: "<%= @access_token %>",
+            showConsole: true
+        }
+        bam = new BeatsPlayer(bap, options);
+        player = new PlayerController(bam, uiOptions);
 
-  function setOAuth2AccessToken(token) {
-      bam.setAuthToken(token);
-      $('.access-token').text(token);
-  }
+        function popAuth() {
+            authWindow = window.open("https://partner.api.beatsmusic.com/oauth2/authorize?" +
+                    "client_id=<%= @client_id %>" +
+            "&response_type=token&state=page&" +
+            "redirect_uri=<%=APP_CONFIG[:auth_callback_url] %>",
+                    "authpop", 'height=600,width=600'
+        )
+            if (window.focus)
+                authWindow.focus()
+        }
 
-</script>
+        function setOAuth2AccessToken(token) {
+            bam.setAuthToken(token);
+            $('.access-token').text(token);
+        }
+
+        $(document).ready(function() {
+            $('#auth').click(popAuth);
+        })
+    </script>
 
 <% end %>
 
 <h1>Play Tracks</h1>
-<p>Client ID: <%= @client_id%></p>
-<p>User ID: <%= @user_id%></p>
-<p>Access Token: <span class="access-token"><%= @access_token%></span></p>
+<p>Client ID: <%= @client_id %></p>
+<p>User ID: <%= @user_id %></p>
+<p>Access Token: <span class="access-token"><%= @access_token %></span></p>
 
 <form action="">
   <div>
@@ -40,18 +54,19 @@
 
 <div id="beats-player">
   <div class="album-art">
-    <img alt="Album Art" />
+    <img alt="Album Art"/>
   </div>
   <div class="meta-container">
     <span class="title">Title</span>
     <span class="performer">Artist</span>
   </div>
   <div class="media-control-container">
-      <span class="play-container"><a href="#"><span class="media-control play">Play</span></a></span>
+    <span class="play-container"><a href="#"><span class="media-control play">Play</span></a></span>
     <span class="back-container"><a href="#"><span class="media-control back">Back</span></a></span>
     <span class="forward-container"><a href="#"><span class="media-control forward">Forward</span></a></span>
     <span class="back-container"><a href="#"><span class="media-control skip">Skip</span></a></span>
     <span class="fast-play-container"><a href="#"><span class="media-control fast-play">Fast Play</span></a></span>
   </div>
-  <div class="counts"><span class="time">0</span> - <span class="buffer">0</span> - <span class="seekable">0</span></div>
+  <div class="counts"><span class="time">0</span> - <span class="buffer">0</span> - <span class="seekable">0</span>
+  </div>
 </div>
