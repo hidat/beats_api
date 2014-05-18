@@ -3,7 +3,7 @@ module ApplicationHelper
   def beats_auth_url
     qp = {
         state: 'test',
-        response_type: 'token',
+        response_type: 'code',
         redirect_url: APP_CONFIG[:auth_callback_url],
         client_id: Rails.application.secrets.beats_client_id
     }

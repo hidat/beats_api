@@ -12,6 +12,11 @@
   bam = new BeatsPlayer(bap, options);
   player = new PlayerController(bam, uiOptions);
 
+  function setOAuth2AccessToken(token) {
+      bam.setAuthToken(token);
+      $('.access-token').text(token);
+  }
+
 </script>
 
 <% end %>
@@ -19,7 +24,7 @@
 <h1>Play Tracks</h1>
 <p>Client ID: <%= @client_id%></p>
 <p>User ID: <%= @user_id%></p>
-<p>Access Token: <%= @access_token%></p>
+<p>Access Token: <span class="access-token"><%= @access_token%></span></p>
 
 <form action="">
   <div>
@@ -30,6 +35,7 @@
     <label>Segments:</label><input type="text" id="segments" size="8" value="4">
     <label>Seconds:</label><input type="text" id="length" size="8" value="6">
   </div>
+  <button id="auth">Auth Test</button>
 </form>
 
 <div id="beats-player">

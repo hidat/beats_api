@@ -108,6 +108,22 @@ class BeatsPlayer
 
     $.ajax(ajaxObj)
 
+  popAuth: () ->
+    authWindow = window.open("https://partner.api.beatsmusic.com/oauth2/authorize?"+
+        "client_id=" + @clientID +
+        "&response_type=token&state=page&"+
+        "redirect_uri=http://localhost:3000/auth/beats_callback",
+      "authpop",'height=600,width=600'
+    )
+    if (window.focus)
+      authWindow.focus()
+
+  setAuthToken: (token) ->
+    @accessToken = token
+    @bam.authentication =
+      access_token: @accessToken,
+      user_id: @userID
+
 
 class PlayerEventHandler
   constructor: (options) ->
@@ -264,6 +280,9 @@ class PlayerController
       @player.loadTrack(trackID)
       @playSegment(1, segments, seconds)
       true
+    )
+    $('#auth').click(()=>
+      @player.popAuth()
     )
 
   playSegment: (segment, total, length) ->

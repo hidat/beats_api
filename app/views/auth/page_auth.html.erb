@@ -1,0 +1,14 @@
+<% content_for :page_scripts do %>
+    <script type="text/javascript">
+      var token;
+      token = '<%=@access_token%>';
+        $(document).ready(function() {
+            w = window.opener;
+            w.window.setOAuth2AccessToken(token);
+        })
+
+    </script>
+<% end %>
+
+<h3>You have been Authorized</h3>
+<p>Token: <%=@access_token%></p>
