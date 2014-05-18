@@ -1,0 +1,168 @@
+@import "icon_font_include";
+
+[class^="icon-"], [class*=" icon-"] {
+  @include icon-font();
+}
+
+.icon-music:before {
+  @include icon-music();
+}
+.icon-headphones:before {
+  @include icon-headphones();
+}
+.icon-play-circle:before {
+  @include icon-play-circle();
+}
+.icon-pause-circle:before {
+  @include icon-pause-circle();
+}
+.icon-stop-circle:before {
+  @include icon-stop-circle();
+}
+.icon-backward-circle:before {
+  @include icon-backward-circle;
+}
+.icon-forward-circle:before {
+  @include icon-forward-circle;
+}
+.icon-play:before {
+  @include icon-play;
+}
+.icon-pause:before {
+  @include icon-pause;
+}
+.icon-stop:before {
+  @include icon-stop;
+}
+.icon-backward:before {
+  @include icon-backward;
+}
+.icon-forward:before {
+  @include icon-forward;
+}
+.icon-first:before {
+  @include icon-first;
+}
+.icon-last:before {
+  @include icon-last;
+}
+.icon-previous:before {
+  @include icon-previous;
+}
+.icon-next:before {
+  @include icon-next;
+}
+.icon-eject:before {
+  @include icon-eject;
+}
+.icon-volume-high:before {
+  @include icon-volume-high();
+}
+.icon-volume-medium:before {
+  @include icon-volume-medium;
+}
+.icon-volume-low:before {
+  @include icon-volume-low;
+}
+.icon-volume-mute:before {
+  @include icon-volume-mute;
+}
+.icon-volume-mute-2:before {
+  @include icon-volume-mute-2;
+}
+.icon-volume-increase:before {
+  @include icon-volume-increase;
+}
+.icon-volume-decrease:before {
+  @include icon-volume-decrease;
+}
+.icon-checkmark:before {
+  @include icon-checkmark;
+}
+.icon-close:before {
+  @include icon-close;
+}
+.icon-blocked:before {
+  @include icon-blocked;
+}
+.icon-info:before {
+  @include icon-info;
+}
+.icon-question:before {
+  @include icon-question;
+}
+.icon-notification:before {
+  @include icon-notification;
+}
+.icon-warning:before {
+  @include icon-warning;
+}
+.icon-checkmark-circle:before {
+  @include icon-checkmark-circle;
+}
+.icon-info2:before {
+  @include icon-info2;
+}
+.icon-spam:before {
+  @include icon-spam;
+}
+.icon-checkmark2:before {
+  @include icon-checkmark2;
+}
+.icon-minus:before {
+  @include icon-minus;
+}
+.icon-facebook:before {
+  @include icon-facebook;
+}
+.icon-twitter:before {
+  @include icon-twitter;
+}
+.icon-tumblr:before {
+  @include icon-tumblr;
+}
+.icon-tumblr2:before {
+  @include icon-tumblr2;
+}
+.icon-facebook2:before {
+  @include icon-facebook2;
+}
+.icon-save:before {
+  @include icon-save;
+}
+.icon-filter:before {
+  @include icon-filter;
+}
+.icon-print:before {
+  @include icon-print;
+}
+.icon-remove-sign:before {
+  @include icon-remove-sign;
+}
+.icon-envelope:before {
+  @include icon-envelope;
+}
+.icon-envelope-alt:before {
+  @include icon-envelope-alt;
+}
+.icon-caret-down:before {
+  @include icon-caret-down;
+}
+.icon-caret-up:before {
+  @include icon-caret-up;
+}
+.icon-caret-left:before {
+  @include icon-caret-left;
+}
+.icon-caret-right:before {
+  @include icon-caret-right;
+}
+.icon-sort:before {
+  @include icon-sort;
+}
+.icon-sort-down:before {
+  @include icon-sort-down;
+}
+.icon-sort-up:before {
+  @include icon-sort-up;
+}

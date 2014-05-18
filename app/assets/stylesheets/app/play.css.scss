@@ -1,0 +1,23 @@
+@import "../icon_font_include";
+
+#beats-player {
+  .media-control-container {
+
+    .media-control.play:after {
+      @include icon-font();
+      @include icon-play();
+    }
+    .forward-container .media-control:after {
+      @include icon-font();
+      @include icon-forward();
+    }
+  }
+
+  .now-playing {
+    .media-control-container {
+      .media-control.play:after {
+        @include icon-font();
+        @include icon-pause();
+      }
+    }  }
+}

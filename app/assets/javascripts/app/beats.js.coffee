@@ -3,6 +3,7 @@
 ##
 class BeatsPlayer
   constructor: (@eventHandler, options) ->
+    @apiURL = "https://partner.api.beatsmusic.com/v1/api/"
     @clientID = options.clientID
     @userID = options.userID
     @accessToken = options.accessToken
@@ -31,7 +32,7 @@ class BeatsPlayer
       true
     );
     @bam.on("loadedmetadata", (metadata)=>
-      @eventHandler.onMetadataLoaded(@bam, metadata)
+      @eventHandler.onMetadataLoaded(@, metadata)
       true
     );
     @bam.on("canplay", ()=>
@@ -78,6 +79,24 @@ class BeatsPlayer
   togglePlayback: () ->
     @bam.play()
 
+  apiCall: (pMethod, pParms) ->
+    if pParms?
+      pParms.client_id = @clientID
+    else
+      pParms =
+        client_id: @clientID
+    theURL = @apiURL + pMethod
+
+    ajaxObj =
+      url:  theURL
+      data: pParms
+      dataType: 'jsonp'
+
+    $.ajax(ajaxObj)
+
+
+
+
 
 class PlayerEventHandler
   constructor: (options) ->
@@ -121,43 +140,48 @@ class PlayerEventHandler
         console.log("Don't know that error!")
     true
 
-  onDuration: (duration) =>
+  onDuration: (bam, duration) =>
     console.log('onDuration')
     true
 
-  onMetadataLoaded: (metadata) =>
+  onMetadataLoaded: (bam, metadata) =>
     console.log('onMetadataLoaded')
+    title = $("#beats-player .title")
+    title.text(metadata.display)
+    bam.apiCall('tracks/' + metadata.id).done((data)=>
+      artist = data.artist
+    )
     true
 
-  onStreamStarted: () =>
+  onStreamStarted: (bam) =>
     console.log('onStreamStarted')
     true
 
-  onStreamPlaying: () =>
+  onStreamPlaying: (bam) =>
     console.log('onStreamPlaying')
     true
 
-  onStreamPaused: () =>
+  onStreamPaused: (bam) =>
     console.log('onStreamPaused')
     true
 
-  onStreamStopped: () =>
+  onStreamStopped: (bam) =>
     console.log('onStreamStopped')
     true
 
-  onStreamStalled: () =>
+  onStreamStalled: (bam) =>
     console.log('onStreamStalled')
     true
 
-  onStreamEnded: () =>
+  onStreamEnded: (bam) =>
     console.log('onStreamEnded')
     true
 
-  onTimeUpdate: () =>
-    console.log('onTimeUpdate')
+  onTimeUpdate: (bam) =>
+    #console.log('onTimeUpdate')
     true
 
-  onVolumeChange: (onVolumeChange) =>
+  onVolumeChange: (bam, onVolumeChange) =>
     console.log('')
     true
 
@@ -168,11 +192,12 @@ class PlayerController
     @hookupEvents()
 
   hookupEvents: () ->
-    $('.media-control.play').click( () =>
+    $('.play-container a').click( () =>
       trackID = $('#trackId').val()
       console.log('Loading Track ' + trackID)
       @player.loadTrack(trackID)
     )
+
 
     $('#play').click(() =>
       console.log('Toggling Track')
