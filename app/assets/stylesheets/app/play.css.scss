@@ -3,7 +3,7 @@
 #beats-player {
   .media-control-container {
 
-    .media-control.play:after {
+    .play-container .media-control:after {
       @include icon-font();
       @include icon-play();
     }
@@ -11,11 +11,20 @@
       @include icon-font();
       @include icon-forward();
     }
+    .back-container .media-control:after {
+      @include icon-font();
+      @include icon-backward();
+    }
+    .skip-container .media-control:after {
+      @include icon-font();
+      @include icon-next();
+    }
+
   }
 
-  .now-playing {
+  &.now-playing:not(.paused) {
     .media-control-container {
-      .media-control.play:after {
+      .play-container .media-control:after {
         @include icon-font();
         @include icon-pause();
       }

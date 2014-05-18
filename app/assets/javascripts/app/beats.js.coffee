@@ -10,6 +10,9 @@ class BeatsPlayer
     @bamReady = false
     @showConsole = options.showConsole
     @bam = new BeatsAudioManager()
+    @loaded = false
+    @playing = false
+    @paused=false
 
     @bam.on("ready", ()=>
       @bamReady = true
@@ -36,14 +39,20 @@ class BeatsPlayer
       true
     );
     @bam.on("canplay", ()=>
+      @loaded = true
+      @playing = true
+      @paused = false
       @eventHandler.onStreamStarted(@bam)
       true
     );
     @bam.on("playing", ()=>
+      @playing = true
+      @paused = false
       @eventHandler.onStreamPlaying(@bam)
       true
     );
     @bam.on("pause", ()=>
+      @paused = true
       @eventHandler.onStreamPaused(@bam)
       true
     );
@@ -56,6 +65,8 @@ class BeatsPlayer
       true
     );
     @bam.on("ended", ()=>
+      @playing = false
+      @loaded = false
       @eventHandler.onStreamEnded(@bam)
       true
     );
@@ -77,7 +88,10 @@ class BeatsPlayer
     @bam.load();
 
   togglePlayback: () ->
-    @bam.play()
+    if @paused
+      @bam.play()
+    else
+      @bam.pause()
 
   apiCall: (pMethod, pParms) ->
     if pParms?
@@ -90,12 +104,9 @@ class BeatsPlayer
     ajaxObj =
       url:  theURL
       data: pParms
-      dataType: 'jsonp'
+      #dataType: 'jsonp'
 
     $.ajax(ajaxObj)
-
-
-
 
 
 class PlayerEventHandler
@@ -148,25 +159,37 @@ class PlayerEventHandler
     console.log('onMetadataLoaded')
     title = $("#beats-player .title")
     title.text(metadata.display)
-    bam.apiCall('tracks/' + metadata.id).done((data)=>
-      artist = data.artist
+    api = bam.apiCall('tracks/' + metadata.id)
+    api.done((data)=>
+      artist = data.data.artist_display_name
+      $("#beats-player .performer").text(artist)
+      true
+    )
+    api.fail(()->
+      console.log('API Failure!')
     )
     true
 
   onStreamStarted: (bam) =>
+    $('#beats-player').removeClass('paused')
+    $('#beats-player').addClass('now-playing')
     console.log('onStreamStarted')
     true
 
   onStreamPlaying: (bam) =>
+    $('#beats-player').removeClass('paused')
+    $('#beats-player').addClass('now-playing')
     console.log('onStreamPlaying')
     true
 
   onStreamPaused: (bam) =>
     console.log('onStreamPaused')
+    $('#beats-player').addClass('paused')
     true
 
   onStreamStopped: (bam) =>
     console.log('onStreamStopped')
+    $('#beats-player').removeClass('now-playing')
     true
 
   onStreamStalled: (bam) =>
@@ -175,9 +198,13 @@ class PlayerEventHandler
 
   onStreamEnded: (bam) =>
     console.log('onStreamEnded')
+    $('#beats-player').removeClass('now-playing')
     true
 
   onTimeUpdate: (bam) =>
+    $('#beats-player .counts .time').text(bam.currentTime)
+    #$('#beats-player .counts .buffer').text(bam.buffered.end)
+    $('#beats-player .counts .seekable').text(bam.seekable.end)
     #console.log('onTimeUpdate')
     true
 
@@ -195,14 +222,68 @@ class PlayerController
     $('.play-container a').click( () =>
       trackID = $('#trackId').val()
       console.log('Loading Track ' + trackID)
+      if (@player.loaded)
+        @player.togglePlayback()
+      else
+        @player.loadTrack(trackID)
+      true
+    )
+
+    $('.back-container a').click( () =>
+      ct = @player.bam.currentTime
+      seekable = @player.bam.seekable
+      if ct > 5
+        ct = ct - 5
+      else
+        ct = 0
+
+      console.log('Moving play point back to ' + ct)
+      #@player.bam.pause()
+      @player.bam.currentTime = ct
+      #@player.bam.play()
+      true
+    )
+
+    $('.forward-container a').click( () =>
+      ct = @player.bam.currentTime
+      seekable = @player.bam.seekable
+      if (ct + 5 > seekable.end)
+        ct = seekable.end - 2
+      else
+        ct = ct + 5
+      console.log('Moving play point forward to ' + ct)
+      @player.bam.currentTime = ct
+      true
+    )
+
+    $('.fast-play-container a').click( () =>
+      trackID = $('#trackId').val()
+      segments = $('#segments').val()
+      seconds = $('#length').val()
+      console.log('Loading Track ' + trackID)
       @player.loadTrack(trackID)
+      @playSegment(1, segments, seconds)
+      true
     )
 
+  playSegment: (segment, total, length) ->
+    totalDuration = @player.bam.duration
+    timerLength = length
+    if (segment == 1)
+      timerLength = length * 1.5
+    else
+      if (segment < total)
+        ct = (totalDuration/(total-1)) * (segment - 1)
+      else
+        ct = totalDuration - (length * 1.5)
+      @player.bam.currentTime = ct
 
-    $('#play').click(() =>
-      console.log('Toggling Track')
-      @player.togglePlayback()
-    )
+    if (segment < total)
+      setTimeout(() =>
+        @playSegment(segment + 1, total, length)
+        true
+      , timerLength * 1000)
+    true
 
 
 window.BeatsPlayer = BeatsPlayer

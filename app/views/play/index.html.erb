@@ -22,8 +22,14 @@
 <p>Access Token: <%= @access_token%></p>
 
 <form action="">
-  <br>trackId
-  <input type="text" id="trackId" size="50" value="tr64998903">
+  <div>
+    <label>Track ID:</label>
+    <input type="text" id="trackId" size="50" value="tr64998903">
+  </div>
+  <div>
+    <label>Segments:</label><input type="text" id="segments" size="8" value="4">
+    <label>Seconds:</label><input type="text" id="length" size="8" value="6">
+  </div>
 </form>
 
 <div id="beats-player">
@@ -36,7 +42,10 @@
   </div>
   <div class="media-control-container">
       <span class="play-container"><a href="#"><span class="media-control play">Play</span></a></span>
-    <span class="forward-container"><a href="#"><span class="media-control fast-forward">Forward</span></a></span>
+    <span class="back-container"><a href="#"><span class="media-control back">Back</span></a></span>
+    <span class="forward-container"><a href="#"><span class="media-control forward">Forward</span></a></span>
     <span class="back-container"><a href="#"><span class="media-control skip">Skip</span></a></span>
+    <span class="fast-play-container"><a href="#"><span class="media-control fast-play">Fast Play</span></a></span>
   </div>
+  <div class="counts"><span class="time">0</span> - <span class="buffer">0</span> - <span class="seekable">0</span></div>
 </div>
